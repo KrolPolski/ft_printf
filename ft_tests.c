@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/09 16:29:14 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:33:10 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int argc, char **argv)
 {
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");
-	else
+	else if (argc == 2)
 		ft_printf(argv[1]);
+	else
+		ft_printf("Too many arguments for now.");
 }
