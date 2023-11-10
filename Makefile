@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 11:21:42 by rboudwin          #+#    #+#              #
-#    Updated: 2023/11/09 16:28:56 by rboudwin         ###   ########.fr        #
+#    Updated: 2023/11/10 10:48:00 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_printf.c
 
-OBJS = $(SRCS:.c=.o) \
-		libft.a
+OBJS = $(SRCS:.c=.o) 
 
 TEST_SRCS = ft_tests.c
 
@@ -26,9 +25,9 @@ NAME = libftprintf.a
 all: $(NAME)
 
 $(NAME) : $(OBJS) libft.a 
-	ar -rc $(NAME) $(OBJS) libftprintf.a
+	ar -rc $(NAME) $(OBJS) libft.a libftprintf.a
 
-test: ft_tests.o libft.a 
+test: $(NAME) ft_tests.o libft.a 
 	cc $(CFLAGS) $(OBJS) ft_tests.o libft.a -o test
 # bonus : .bonus
 	

@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/09 16:16:23 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/10 12:16:46 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,40 @@
  * */
 #include "libft.h"
 
+static void	ft_identify_data_type(const char *c, int i)
+{
+	if (c[++i] == 'd')
+		ft_fetch_int();
+	else if (c[i] == 'c')
+	   ft_fetch_char();
+
+	return (i);
+}
 int ft_printf(const char *c, ...)
 {
-	ft_putstr_fd((char *)c, 1);
-	return (0);
+	int		i;
+	int		start;
+	int		len;
+	char	str[1];
+
+	i = 0;
+	start = 0;
+	len = 0;
+	str[0] = '\0';
+
+	while (c[i] != '\0')
+	{
+		if (c[i] == '%')
+		{
+			str = ft_strjoin(str, ft_substr(c, start, len); 
+			i = ft_identify_data_type(c, i);
+		}
+		else
+			len++;
+		i++;
+	}
+
+
+
+	return (ft_strlen(str));
 }
