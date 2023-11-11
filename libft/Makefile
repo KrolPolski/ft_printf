@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 11:21:42 by rboudwin          #+#    #+#              #
-#    Updated: 2023/11/09 09:40:25 by rboudwin         ###   ########.fr        #
+#    Updated: 2023/11/11 13:29:13 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ BONUS_SRCS = ft_lstnew_bonus.c \
 			 ft_lstdelone_bonus.c \
 			 ft_lstclear_bonus.c \
 			 ft_lstiter_bonus.c \
-			 ft_lstmap_bonus.c
 
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 NAME = libft.a
