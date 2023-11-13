@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:32:44 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:41:02 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-static void	ft_puthex_converter(int n, int caps)
+static void	ft_puthex_converter(long n, int caps)
 {
 if (n >= 16)
 	{
@@ -50,7 +50,7 @@ if (n >= 16)
 				ft_putchar_fd(n + 55, 1);
 	}
 }
-static void ft_puthex(int n, int caps)
+static void ft_puthex(long n, int caps)
 {
 	if (n == -2147483648)
 	{
@@ -70,7 +70,8 @@ static void ft_puthex(int n, int caps)
 
 int	ft_identify_data_type(char const *c, int i, va_list args)
 {
-	void *ptr;
+	void	*ptr;
+	long	ptr_long;
 
 	i++;
 	if (c[i] == '%')
@@ -83,7 +84,9 @@ int	ft_identify_data_type(char const *c, int i, va_list args)
 	else if (c[i] == 'p')
 	{
 		ptr = va_arg(args, void *);
-		write(1, ptr, sizeof(void *));
+		ptr_long = (long)ptr;
+		ft_putstr_fd("0x", 1);
+		ft_puthex(ptr_long, 0);
 	}
 	else if (c[i] == 's')
 		ft_putstr_fd(va_arg(args, char *), 1);
