@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:41:02 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:47:43 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@
  * */
 #include "ft_printf.h"
 #include <stdio.h>
+
+void	ft_putnbr_unsigned(unsigned int n, int fd)
+{
+	if (n >= 10)
+	{
+		ft_putnbr_unsigned(n / 10, fd);
+		n = n % 10;
+	}
+	if (n < 10)
+		ft_putchar_fd(n + '0', fd);
+}
 
 static void	ft_puthex_converter(long n, int caps)
 {
@@ -90,6 +101,8 @@ int	ft_identify_data_type(char const *c, int i, va_list args)
 	}
 	else if (c[i] == 's')
 		ft_putstr_fd(va_arg(args, char *), 1);
+	else if (c[i] == 'u')
+		ft_putnbr_unsigned(va_arg(args, int), 1);
 	else if (c[i] == 'x')
 		ft_puthex(va_arg(args, int), 0);
 	else if (c[i] == 'X')

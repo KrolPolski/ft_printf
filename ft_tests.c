@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:41:29 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:48:09 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(void)
 	printf("Reference: '%x' '%X'\n", 255, 255);
 	ft_printf("Let's try a pointer '%p'\n", ptr);
 	printf("Reference: '%p'\n", ptr);
+	ft_printf("Unsigned int '%u'\n", 2525);
+	printf("Reference: '%u'\n", 2525);
 	/*
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");
