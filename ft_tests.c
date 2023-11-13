@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:48:09 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:08:23 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int	main(void)
 {
@@ -30,6 +31,8 @@ int	main(void)
 	printf("Reference: '%p'\n", ptr);
 	ft_printf("Unsigned int '%u'\n", 2525);
 	printf("Reference: '%u'\n", 2525);
+	ft_printf("Null string test '%s' \n", NULL);
+	printf("Reference: '%s'\n", NULL);
 	/*
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");

@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:47:43 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:08:05 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,35 @@ static void ft_puthex(long n, int caps)
 	
 }
 
-int	ft_identify_data_type(char const *c, int i, va_list args)
+int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 {
 	void	*ptr;
 	long	ptr_long;
+	int		n;
+	char	*str;
 
 	i++;
 	if (c[i] == '%')
+	{
 		ft_putchar_fd('%', 1);
+		(*len)++;
+	}
 	else if (c[i] == 'c')
+	{
 		ft_putchar_fd(va_arg(args, int), 1);
+		(*len)++;
+	}
 	else if (c[i] == 'd' || c[i] == 'i')
-		ft_putnbr_fd(va_arg(args, int), 1);
+	{
+		n = va_arg(args, int);
+		ft_putnbr_fd(n , 1);
+		if (n < 0)
+		{
+			len++;
+			n = -n;
+		}
+		*(len) = *(len) + 1 + (n / 10);
+	}
 	// ptrs don't work yet, I think I need to set up hexadecimals first
 	else if (c[i] == 'p')
 	{
@@ -98,11 +115,28 @@ int	ft_identify_data_type(char const *c, int i, va_list args)
 		ptr_long = (long)ptr;
 		ft_putstr_fd("0x", 1);
 		ft_puthex(ptr_long, 0);
+		*len = (*len) + 14;
 	}
 	else if (c[i] == 's')
-		ft_putstr_fd(va_arg(args, char *), 1);
+	{
+		str = va_arg(args, char *);
+		if (str == NULL)
+		{
+			ft_putstr_fd("(null)", 1);
+			*len = (*len) + 6;
+		}
+		else
+		{
+			ft_putstr_fd(str, 1);
+			*len = (*len) + ft_strlen(str); 
+		}
+	}
 	else if (c[i] == 'u')
-		ft_putnbr_unsigned(va_arg(args, int), 1);
+	{
+		n = va_arg(args, unsigned int);
+		ft_putnbr_unsigned(va_arg(args, unsigned int), 1);
+		*(len) = *(len) + 1 + (n / 10);
+	}
 	else if (c[i] == 'x')
 		ft_puthex(va_arg(args, int), 0);
 	else if (c[i] == 'X')
@@ -122,7 +156,7 @@ int	ft_printf(const char *c, ...)
 	while (c[i] != '\0')
 	{
 		if (c[i] == '%')
-			i = ft_identify_data_type(c, i, args);
+			i = ft_identify_data_type(c, i, args, &len);
 		else
 		{
 			(ft_putchar_fd(c[i], 1));
