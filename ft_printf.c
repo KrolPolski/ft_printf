@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 16:25:56 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:32:44 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,11 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-static void ft_puthex(int n, int caps)
+static void	ft_puthex_converter(int n, int caps)
 {
-	if (n == -2147483648)
+if (n >= 16)
 	{
-		write(1, "-0x80000000", 11);
-		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', 1);
-		n = -n;
-	}
-	if (n >= 16)
-	{
-		ft_puthex(n / 16, caps);
+		ft_puthex_converter(n / 16, caps);
 		n = n % 16;
 	}
 	if (n < 16)
@@ -59,6 +49,23 @@ static void ft_puthex(int n, int caps)
 			else if (caps == 1)
 				ft_putchar_fd(n + 55, 1);
 	}
+}
+static void ft_puthex(int n, int caps)
+{
+	if (n == -2147483648)
+	{
+		write(1, "-0x80000000", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_fd('-', 1);
+		n = -n;
+	}
+	// ft_putstr_fd("0x", 1);
+
+	ft_puthex_converter(n, caps);
+	
 }
 
 int	ft_identify_data_type(char const *c, int i, va_list args)
