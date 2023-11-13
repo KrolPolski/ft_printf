@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 15:38:38 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:44:56 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,13 @@
 
 int	ft_identify_data_type(char const *c, int i, va_list args)
 {
-	int n;
-
 	i++;
+	if (c[i] == 'c')
+		ft_putchar_fd(va_arg(args, int), 1);
 	if (c[i] == 'd')
-	{
-		n = va_arg(args, int);
-		ft_putnbr_fd(n, 1);
-	}
+		ft_putnbr_fd(va_arg(args, int), 1);
 	if (c[i] == 's')
-	{
 		ft_putstr_fd(va_arg(args, char *), 1);
-	}
 	return (i);
 }
 

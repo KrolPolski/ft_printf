@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 15:39:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:44:25 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(void)
 	ft_printf("Let's try a string alone \n");
 	ft_printf("Let's try a format string with an integer '%d' and some text after \n", 42);
 	ft_printf("Let's try three strings '%s' '%s' '%s'\n", "one", "two", "three");
+	ft_printf("Let's try some chars '%c' '%c'", 'a', 'b');
 	/*
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");
