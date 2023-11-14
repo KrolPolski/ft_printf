@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 12:54:40 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:10:16 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static void	ft_puthex_converter(unsigned long n, int caps, int *len)
 		(*len)++;
 	}
 }
-static void ft_puthex(long n, int caps, int *len)
+
+static void	ft_puthex(long n, int caps, int *len)
 {
 	if (n < 0)
 	{
@@ -78,17 +79,32 @@ static void ft_puthex(long n, int caps, int *len)
 	ft_puthex_converter((unsigned long)n, caps, len);
 }
 
-static void ft_putpointer(unsigned long n, int caps, int *len)
+static void	ft_putpointer(unsigned long n, int caps, int *len)
 {
 	ft_puthex_converter(n, caps, len);
 }
 
+void	ft_fetch_integer(va_list args, int *len)
+{
+	int n;
+
+	n = va_arg(args, int);
+	if (n < 0)
+	{
+		len++;
+		n = -n;
+		ft_putchar_fd('-', 1);
+	}
+	ft_putnbr_fd(n, 1);
+	*(len) = *(len) + 1 + (n / 10);
+}
+
 int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 {
-	void	*ptr;
+	void			*ptr;
 	unsigned long	ptr_long;
-	int		n;
-	char	*str;
+	int				n;
+	char			*str;
 
 	i++;
 	if (c[i] == '%')
@@ -102,18 +118,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		(*len)++;
 	}
 	else if (c[i] == 'd' || c[i] == 'i')
-	{
-		n = va_arg(args, int);
-		if (n < 0)
-		{
-			len++;
-			n = -n;
-			ft_putchar_fd('-', 1);
-		}
-		ft_putnbr_fd(n , 1);
-		*(len) = *(len) + 1 + (n / 10);
-	}
-	// ptrs don't work yet, I think I need to set up hexadecimals first
+		ft_fetch_integer(args, len);
 	else if (c[i] == 'p')
 	{
 		ptr = va_arg(args, void *);
@@ -122,7 +127,6 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		*len = (*len) + 2;
 		ft_putpointer(ptr_long, 0, len);
 	}
-	
 	else if (c[i] == 's')
 	{
 		str = va_arg(args, char *);
@@ -134,7 +138,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		else
 		{
 			ft_putstr_fd(str, 1);
-			*len = (*len) + ft_strlen(str); 
+			*len = (*len) + ft_strlen(str);
 		}
 	}
 	else if (c[i] == 'u')
@@ -154,7 +158,7 @@ int	ft_printf(const char *c, ...)
 {
 	int		i;
 	va_list	args;
-	int len;
+	int		len;
 
 	i = 0;
 	len = 0;
