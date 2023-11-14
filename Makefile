@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 11:21:42 by rboudwin          #+#    #+#              #
-#    Updated: 2023/11/14 16:06:22 by rboudwin         ###   ########.fr        #
+#    Updated: 2023/11/14 16:31:33 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME = libftprintf.a
 all: $(NAME)
 
 $(NAME) : $(OBJS) libft.a 
-	ar -rc $(NAME) $(OBJS) libft.a libftprintf.a
+	ar -rc $(NAME) $(OBJS) libft/libft.a libftprintf.a
 
 test: $(NAME) ft_tests.o libft.a 
 	cc $(CFLAGS) $(OBJS) ft_tests.o libft.a -o test
