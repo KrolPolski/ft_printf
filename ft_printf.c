@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:42:41 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:44:59 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'u')
 	{
 		n = va_arg(args, unsigned int);
-		printf("n is currently %d\n", n);
+	//	printf("n is currently %d\n", n);
 		ft_putnbr_unsigned(n, 1, len);
 	}
 	else if (c[i] == 'x')
