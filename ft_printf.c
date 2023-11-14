@@ -6,39 +6,16 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 15:57:01 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:13:57 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putpointer(unsigned long n, int caps, int *len)
-{
-	int	a;
-
-	a = 0;
-	return (ft_puthex_converter(n, caps, len, a));
-}
-
-int	ft_fetch_pointer(va_list args, int *len, int a)
-{
-	void			*ptr;
-	unsigned long	ptr_long;
-	
-	ptr = va_arg(args, void *);
-	ptr_long = (unsigned long)ptr;
-	a = ft_putstr_fd("0x", 1);
-	if (a == -1)
-		return (a);
-	*len = (*len) + 2;
-	a = ft_putpointer(ptr_long, 0, len);
-	return (a);
-}
-
 int	ft_fetch_string(va_list args, int *len, int a)
 {
-	char			*str;
-	
+	char	*str;
+
 	str = va_arg(args, char *);
 	if (str == NULL)
 	{
@@ -53,22 +30,32 @@ int	ft_fetch_string(va_list args, int *len, int a)
 	return (a);
 }
 
-int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+int	ft_percent_or_char(char const *c, int *i, va_list args, int *len)
 {
-	int				a;
+	int	a;
 
-	i++;
-	a = 0;
-	if (c[i] == '%')
+	a = -1;
+	if (c[(*i)] == '%')
 	{
 		a = ft_putchar_fd('%', 1);
 		(*len)++;
 	}
-	else if (c[i] == 'c')
+	else if (c[*i] == 'c')
 	{
 		a = ft_putchar_fd(va_arg(args, int), 1);
 		(*len)++;
 	}
+	return (a);
+}
+
+int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+{
+	int	a;
+
+	a = -1;
+	i++;
+	if (c[i] == '%' || c[i] == 'c')
+		a = ft_percent_or_char(c, &i, args, len);
 	else if (c[i] == 'd' || c[i] == 'i')
 		a = (ft_fetch_integer(args, len));
 	else if (c[i] == 'p')
@@ -82,7 +69,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'X')
 		a = ft_puthex(va_arg(args, int), 1, len);
 	if (a == -1)
-		return (a);
+		i = a;
 	return (i);
 }
 

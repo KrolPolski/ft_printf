@@ -6,12 +6,12 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 15:31:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:15:00 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
 #include "ft_printf.h"
+/*
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,7 +30,7 @@ int	main(void)
 	ft_return = ft_printf("'%u'\n", -10);
 	printf_return = printf("'%u'\n", -10);
 	printf("Return values - ft: '%d' printf: '%d'\n", ft_return, printf_return);
-*/	/*ft_printf("Let's try three strings '%s' '%s' '%s'\n",
+	ft_printf("Let's try three strings '%s' '%s' '%s'\n",
 	  "one", "two", "three");
 	ft_printf("Let's try some chars '%c' '%c'\n", 'a', 'b');
 	ft_printf("Lets try to put 255 into hex '%x' '%X' \n", 255, 255);
@@ -52,8 +52,8 @@ int	main(void)
 	printf("%p\n", (void *)-14523);
 //	ft_printf("Max long: %d", 9223372036854775807);
 //	printf("Max long: %d", 9223372036854775807);
-	*/
-	/*
+	
+	
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");
 	else if (argc == 2){
@@ -64,5 +64,5 @@ int	main(void)
 		ft_printf(argv[1], argv[2]);
 	else
 		ft_printf("Too many arguments for now.");
-		*/
-//}
+	
+}*/
