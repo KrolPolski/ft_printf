@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 17:12:23 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 09:49:07 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	main(void)
 {
 	int a;
 	int *ptr;
-	
+	int ft_return;
+	int printf_return;
+
 	a = 3;
 	ptr = &a;
 	ft_printf("Let's try a string alone \n");
@@ -33,6 +35,14 @@ int	main(void)
 	printf("Reference: '%u'\n", 2525);
 	ft_printf("Null string test '%s' \n", NULL);
 	printf("Reference: '%s'\n", NULL);
+	ft_return =	ft_printf("%p", "");
+	printf("\n");
+	printf_return = printf("%p", "");
+	printf("\nFt_printf returns '%d' and printf returns '%d'", ft_return, printf_return);
+	ft_printf("%p\n", NULL);
+	printf("%p\n", NULL);
+	ft_printf("%p\n", (void *)-14523);
+	printf("%p\n", (void *)-14523);
 	/*
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");

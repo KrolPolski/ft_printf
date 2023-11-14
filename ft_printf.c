@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/13 17:08:05 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:12:06 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ void	ft_putnbr_unsigned(unsigned int n, int fd)
 		ft_putchar_fd(n + '0', fd);
 }
 
-static void	ft_puthex_converter(long n, int caps)
+static void	ft_puthex_converter(unsigned long n, int caps, int *len)
 {
 if (n >= 16)
 	{
-		ft_puthex_converter(n / 16, caps);
+		ft_puthex_converter(n / 16, caps, len);
 		n = n % 16;
 	}
 	if (n < 16)
-	{	
+	{
 		if (n < 10)
 			ft_putchar_fd(n + '0', 1);
 		else
@@ -59,30 +59,29 @@ if (n >= 16)
 				ft_putchar_fd(n + 87, 1);
 			else if (caps == 1)
 				ft_putchar_fd(n + 55, 1);
+		(*len)++;
 	}
 }
-static void ft_puthex(long n, int caps)
+static void ft_puthex(long n, int caps, int *len)
 {
-	if (n == -2147483648)
-	{
-		write(1, "-0x80000000", 11);
-		return ;
-	}
 	if (n < 0)
 	{
 		ft_putchar_fd('-', 1);
+		(*len)++;
 		n = -n;
 	}
-	// ft_putstr_fd("0x", 1);
+	ft_puthex_converter((unsigned long)n, caps, len);
+}
 
-	ft_puthex_converter(n, caps);
-	
+static void ft_putpointer(unsigned long n, int caps, int *len)
+{
+	ft_puthex_converter(n, caps, len);
 }
 
 int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 {
 	void	*ptr;
-	long	ptr_long;
+	unsigned long	ptr_long;
 	int		n;
 	char	*str;
 
@@ -112,11 +111,12 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'p')
 	{
 		ptr = va_arg(args, void *);
-		ptr_long = (long)ptr;
+		ptr_long = (unsigned long)ptr;
 		ft_putstr_fd("0x", 1);
-		ft_puthex(ptr_long, 0);
-		*len = (*len) + 14;
+		*len = (*len) + 2;
+		ft_putpointer(ptr_long, 0, len);
 	}
+	
 	else if (c[i] == 's')
 	{
 		str = va_arg(args, char *);
@@ -138,9 +138,9 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		*(len) = *(len) + 1 + (n / 10);
 	}
 	else if (c[i] == 'x')
-		ft_puthex(va_arg(args, int), 0);
+		ft_puthex(va_arg(args, int), 0, len);
 	else if (c[i] == 'X')
-		ft_puthex(va_arg(args, int), 1);
+		ft_puthex(va_arg(args, int), 1, len);
 	return (i);
 }
 
