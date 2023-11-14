@@ -6,13 +6,13 @@
 #    By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 11:21:42 by rboudwin          #+#    #+#              #
-#    Updated: 2023/11/13 15:16:54 by rboudwin         ###   ########.fr        #
+#    Updated: 2023/11/14 15:35:08 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_printf.c
+SRCS = ft_printf.c ft_handlenumbers.c
 
 OBJS = $(SRCS:.c=.o) 
 
