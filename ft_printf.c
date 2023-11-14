@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 15:34:50 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:48:36 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,29 @@ int	ft_putpointer(unsigned long n, int caps, int *len)
 	return (ft_puthex_converter(n, caps, len, a));
 }
 
-int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+int	ft_fetch_pointer(va_list args, int *len, int a)
 {
 	void			*ptr;
 	unsigned long	ptr_long;
+	
+	ptr = va_arg(args, void *);
+	ptr_long = (unsigned long)ptr;
+	a = ft_putstr_fd("0x", 1);
+	if (a == -1)
+		return (a);
+	*len = (*len) + 2;
+	a = ft_putpointer(ptr_long, 0, len);
+	return (a);
+}
+
+int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+{
 	int				n;
 	char			*str;
 	int				a;
 
 	i++;
+	a = 0;
 	if (c[i] == '%')
 	{
 		a = ft_putchar_fd('%', 1);
@@ -44,23 +58,9 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		(*len)++;
 	}
 	else if (c[i] == 'd' || c[i] == 'i')
-	{
-		a = ft_fetch_integer(args, len);
-		if (a == -1)
-			return (a);
-	}
+		a = (ft_fetch_integer(args, len));
 	else if (c[i] == 'p')
-	{
-		ptr = va_arg(args, void *);
-		ptr_long = (unsigned long)ptr;
-		a = ft_putstr_fd("0x", 1);
-		if (a == -1)
-			return (a);
-		*len = (*len) + 2;
-		a = ft_putpointer(ptr_long, 0, len);
-		if (a == -1)
-			return (a);
-	}
+		a = (ft_fetch_pointer(args, len, 0));
 	else if (c[i] == 's')
 	{
 		str = va_arg(args, char *);
@@ -98,6 +98,8 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		if (a == -1)
 			return (a);
 	}
+	if (a == -1)
+		return (a);
 	return (i);
 }
 
