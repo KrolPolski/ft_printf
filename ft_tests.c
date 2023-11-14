@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 09:49:07 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:50:01 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 	ptr = &a;
 	ft_printf("Let's try a string alone \n");
 	ft_printf("Let's try a format string with an integer '%d' and a percent sign %% after \n", 42);
+	ft_printf("Negative number test of '-10' should return '%d'", -10);
 	ft_printf("Let's try three strings '%s' '%s' '%s'\n", "one", "two", "three");
 	ft_printf("Let's try some chars '%c' '%c'\n", 'a', 'b');
 	ft_printf("Lets try to put 255 into hex '%x' '%X' \n", 255, 255);
@@ -43,6 +44,9 @@ int	main(void)
 	printf("%p\n", NULL);
 	ft_printf("%p\n", (void *)-14523);
 	printf("%p\n", (void *)-14523);
+//	ft_printf("Max long: %d", 9223372036854775807);
+//	printf("Max long: %d", 9223372036854775807);
+	
 	/*
 	if (argc == 1)
 		ft_printf("Please enter arguments to be sent to the printf function");

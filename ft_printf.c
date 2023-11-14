@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 10:12:06 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:54:40 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,23 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	ft_putnbr_unsigned(unsigned int n, int fd)
+void	ft_putnbr_unsigned(unsigned int n, int fd, int *len)
 {
 	if (n >= 10)
 	{
-		ft_putnbr_unsigned(n / 10, fd);
+		ft_putnbr_unsigned(n / 10, fd, len);
 		n = n % 10;
 	}
 	if (n < 10)
+	{
 		ft_putchar_fd(n + '0', fd);
+		(*len)++;
+	}
 }
 
 static void	ft_puthex_converter(unsigned long n, int caps, int *len)
 {
-if (n >= 16)
+	if (n >= 16)
 	{
 		ft_puthex_converter(n / 16, caps, len);
 		n = n % 16;
@@ -55,10 +58,12 @@ if (n >= 16)
 		if (n < 10)
 			ft_putchar_fd(n + '0', 1);
 		else
+		{
 			if (caps == 0)
 				ft_putchar_fd(n + 87, 1);
 			else if (caps == 1)
 				ft_putchar_fd(n + 55, 1);
+		}
 		(*len)++;
 	}
 }
@@ -99,12 +104,13 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'd' || c[i] == 'i')
 	{
 		n = va_arg(args, int);
-		ft_putnbr_fd(n , 1);
 		if (n < 0)
 		{
 			len++;
 			n = -n;
+			ft_putchar_fd('-', 1);
 		}
+		ft_putnbr_fd(n , 1);
 		*(len) = *(len) + 1 + (n / 10);
 	}
 	// ptrs don't work yet, I think I need to set up hexadecimals first
@@ -134,8 +140,8 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'u')
 	{
 		n = va_arg(args, unsigned int);
-		ft_putnbr_unsigned(va_arg(args, unsigned int), 1);
-		*(len) = *(len) + 1 + (n / 10);
+		printf("n is currently %d\n", n);
+		ft_putnbr_unsigned(n, 1, len);
 	}
 	else if (c[i] == 'x')
 		ft_puthex(va_arg(args, int), 0, len);
