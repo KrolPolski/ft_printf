@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:37:46 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:42:41 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ void	ft_fetch_integer(va_list args, int *len)
 	int n;
 
 	n = va_arg(args, int);
+	if (n == -2147483648)
+	{
+		ft_putstr_fd("-2147483648", 1);
+		*len = (*len) + 11; 
+		return ;
+	}
 	if (n < 0)
 	{
 		(*len)++;
