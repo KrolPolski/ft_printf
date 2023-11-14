@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 15:52:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:57:01 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,26 @@ int	ft_fetch_pointer(va_list args, int *len, int a)
 	return (a);
 }
 
-int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+int	ft_fetch_string(va_list args, int *len, int a)
 {
 	char			*str;
+	
+	str = va_arg(args, char *);
+	if (str == NULL)
+	{
+		a = ft_putstr_fd("(null)", 1);
+		*len = (*len) + 6;
+	}
+	else
+	{
+		a = ft_putstr_fd(str, 1);
+		*len = (*len) + ft_strlen(str);
+	}
+	return (a);
+}
+
+int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+{
 	int				a;
 
 	i++;
@@ -57,19 +74,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'p')
 		a = (ft_fetch_pointer(args, len, 0));
 	else if (c[i] == 's')
-	{
-		str = va_arg(args, char *);
-		if (str == NULL)
-		{
-			a = ft_putstr_fd("(null)", 1);
-			*len = (*len) + 6;
-		}
-		else
-		{
-			a = ft_putstr_fd(str, 1);
-			*len = (*len) + ft_strlen(str);
-		}
-	}
+		a = (ft_fetch_string(args, len, 0));
 	else if (c[i] == 'u')
 		a = ft_putnbr_unsigned(va_arg(args, unsigned int), 1, len, 0);
 	else if (c[i] == 'x')
