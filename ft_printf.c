@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:10:16 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:37:46 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,18 @@ static void	ft_putpointer(unsigned long n, int caps, int *len)
 	ft_puthex_converter(n, caps, len);
 }
 
+int	ft_log10(int n)
+{
+	int result;
+
+	result = 0;
+	while (n / 10 != 0)
+	{
+		result++; 
+		n = n / 10;
+	}
+	return result;
+}
 void	ft_fetch_integer(va_list args, int *len)
 {
 	int n;
@@ -91,12 +103,12 @@ void	ft_fetch_integer(va_list args, int *len)
 	n = va_arg(args, int);
 	if (n < 0)
 	{
-		len++;
+		(*len)++;
 		n = -n;
 		ft_putchar_fd('-', 1);
 	}
 	ft_putnbr_fd(n, 1);
-	*(len) = *(len) + 1 + (n / 10);
+	(*len) = (*len) + 1 + ft_log10(n);
 }
 
 int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
@@ -170,6 +182,7 @@ int	ft_printf(const char *c, ...)
 		else
 		{
 			(ft_putchar_fd(c[i], 1));
+//			printf("current len is %d\n", len);
 			len++;
 		}
 		i++;
