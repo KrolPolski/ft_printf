@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 14:53:30 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:10:06 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,19 @@
 #include <stdio.h>
 
 int	ft_putnbr_unsigned(unsigned int n, int fd, int *len, int a)
-{	
-//	if (a == -1)
-//		return(a);
+{
 	if (n >= 10)
 	{
 		a = ft_putnbr_unsigned(n / 10, fd, len, a);
 		if (a == -1)
-			return(a);
+			return (a);
 		n = n % 10;
 	}
 	if (n < 10)
 	{
-		 a = ft_putchar_fd(n + '0', fd);
-		 if (a == -1)
-			 return (a);
+		a = ft_putchar_fd(n + '0', fd);
+		if (a == -1)
+			return (a);
 		(*len)++;
 	}
 	return (a);
@@ -55,7 +53,6 @@ int	ft_putnbr_unsigned(unsigned int n, int fd, int *len, int a)
 
 static int	ft_puthex_converter(unsigned long n, int caps, int *len, int a)
 {
-
 	if (n >= 16)
 	{
 		a = ft_puthex_converter(n / 16, caps, len, a);
@@ -70,9 +67,9 @@ static int	ft_puthex_converter(unsigned long n, int caps, int *len, int a)
 		else
 		{
 			if (caps == 0)
-			a =	ft_putchar_fd(n + 87, 1);
-			else 
-			a =	ft_putchar_fd(n + 55, 1);
+				a = ft_putchar_fd(n + 87, 1);
+			else
+				a = ft_putchar_fd(n + 55, 1);
 		}
 		(*len)++;
 		if (a == -1)
@@ -81,15 +78,9 @@ static int	ft_puthex_converter(unsigned long n, int caps, int *len, int a)
 	return (0);
 }
 
-static int ft_puthex(unsigned int n, int caps, int *len)
+static int	ft_puthex(unsigned int n, int caps, int *len)
 {
-	/*if (n < 0)
-	{
-		ft_putchar_fd('-', 1);
-		(*len)++;
-		n = -n;
-	}*/
-	int a;
+	int	a;
 
 	a = 0;
 	return (ft_puthex_converter(n, caps, len, a));
@@ -97,36 +88,37 @@ static int ft_puthex(unsigned int n, int caps, int *len)
 
 static int	ft_putpointer(unsigned long n, int caps, int *len)
 {
-	int a;
-	
+	int	a;
+
 	a = 0;
-	return(ft_puthex_converter(n, caps, len, a));
+	return (ft_puthex_converter(n, caps, len, a));
 }
 
 int	ft_log10(int n)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	while (n / 10 != 0)
 	{
-		result++; 
+		result++;
 		n = n / 10;
 	}
-	return result;
+	return (result);
 }
+
 int	ft_fetch_integer(va_list args, int *len)
 {
-	int n;
-	int a;
+	int	n;
+	int	a;
 
 	n = va_arg(args, int);
 	if (n == -2147483648)
 	{
-		a =	ft_putstr_fd("-2147483648", 1);
+		a = ft_putstr_fd("-2147483648", 1);
 		if (a == -1)
 			return (a);
-		*len = (*len) + 11; 
+		*len = (*len) + 11;
 		return (a);
 	}
 	if (n < 0)
@@ -151,6 +143,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	int				n;
 	char			*str;
 	int				a;
+
 	i++;
 	if (c[i] == '%')
 	{
@@ -170,7 +163,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	{
 		a = ft_fetch_integer(args, len);
 		if (a == -1)
-			return (a); 
+			return (a);
 	}
 	else if (c[i] == 'p')
 	{
@@ -178,7 +171,7 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 		ptr_long = (unsigned long)ptr;
 		a = ft_putstr_fd("0x", 1);
 		if (a == -1)
-			return(a);
+			return (a);
 		*len = (*len) + 2;
 		a = ft_putpointer(ptr_long, 0, len);
 		if (a == -1)
@@ -205,7 +198,6 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 'u')
 	{
 		n = va_arg(args, unsigned int);
-	//	printf("n is currently %d\n", n);
 		a = ft_putnbr_unsigned(n, 1, len, 0);
 		if (a == -1)
 			return (a);
@@ -244,7 +236,6 @@ int	ft_printf(const char *c, ...)
 			a = ft_putchar_fd(c[i], 1);
 			if (a == -1)
 				return (a);
-//			printf("current len is %d\n", len);
 			len++;
 		}
 		if (i == -1)
