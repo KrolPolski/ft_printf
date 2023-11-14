@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 14:49:00 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:53:30 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 
 int	ft_putnbr_unsigned(unsigned int n, int fd, int *len, int a)
 {	
-	if (a == -1)
-		return(a);
+//	if (a == -1)
+//		return(a);
 	if (n >= 10)
 	{
 		a = ft_putnbr_unsigned(n / 10, fd, len, a);
@@ -53,13 +53,14 @@ int	ft_putnbr_unsigned(unsigned int n, int fd, int *len, int a)
 	return (a);
 }
 
-static int	ft_puthex_converter(unsigned long n, int caps, int *len)
+static int	ft_puthex_converter(unsigned long n, int caps, int *len, int a)
 {
-	int a;
 
 	if (n >= 16)
 	{
-		ft_puthex_converter(n / 16, caps, len);
+		a = ft_puthex_converter(n / 16, caps, len, a);
+		if (a == -1)
+			return (a);
 		n = n % 16;
 	}
 	if (n < 16)
@@ -88,12 +89,18 @@ static int ft_puthex(unsigned int n, int caps, int *len)
 		(*len)++;
 		n = -n;
 	}*/
-	return (ft_puthex_converter(n, caps, len));
+	int a;
+
+	a = 0;
+	return (ft_puthex_converter(n, caps, len, a));
 }
 
 static int	ft_putpointer(unsigned long n, int caps, int *len)
 {
-	return(ft_puthex_converter(n, caps, len));
+	int a;
+	
+	a = 0;
+	return(ft_puthex_converter(n, caps, len, a));
 }
 
 int	ft_log10(int n)
