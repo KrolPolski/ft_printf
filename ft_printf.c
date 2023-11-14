@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:44:59 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:51:36 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ static void	ft_puthex_converter(unsigned long n, int caps, int *len)
 	}
 }
 
-static void	ft_puthex(long n, int caps, int *len)
+static void	ft_puthex(unsigned int n, int caps, int *len)
 {
-	if (n < 0)
+	/*if (n < 0)
 	{
 		ft_putchar_fd('-', 1);
 		(*len)++;
 		n = -n;
-	}
-	ft_puthex_converter((unsigned long)n, caps, len);
+	}*/
+	ft_puthex_converter(n, caps, len);
 }
 
 static void	ft_putpointer(unsigned long n, int caps, int *len)
