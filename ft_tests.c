@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:13:53 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:36:15 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:45:46 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(void)
 	ptr = &a;
 	//ft_printf("Let's try a string alone \n");
 	//ft_printf("Let's try a format string with an integer '%d' and a percent sign %% after \n", 42);
-	ft_return = ft_printf("'%d'\n", -10);
-	printf_return = printf("'%d'\n", -10);
+	ft_return = ft_printf("'%u'\n", -10);
+	printf_return = printf("'%u'\n", -10);
 	printf("Return values - ft: '%d' printf: '%d'\n", ft_return, printf_return);
 	/*ft_printf("Let's try three strings '%s' '%s' '%s'\n", "one", "two", "three");
 	ft_printf("Let's try some chars '%c' '%c'\n", 'a', 'b');

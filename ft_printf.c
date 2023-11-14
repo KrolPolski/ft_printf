@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 13:51:36 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:49:00 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,31 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	ft_putnbr_unsigned(unsigned int n, int fd, int *len)
-{
+int	ft_putnbr_unsigned(unsigned int n, int fd, int *len, int a)
+{	
+	if (a == -1)
+		return(a);
 	if (n >= 10)
 	{
-		ft_putnbr_unsigned(n / 10, fd, len);
+		a = ft_putnbr_unsigned(n / 10, fd, len, a);
+		if (a == -1)
+			return(a);
 		n = n % 10;
 	}
 	if (n < 10)
 	{
-		ft_putchar_fd(n + '0', fd);
+		 a = ft_putchar_fd(n + '0', fd);
+		 if (a == -1)
+			 return (a);
 		(*len)++;
 	}
+	return (a);
 }
 
-static void	ft_puthex_converter(unsigned long n, int caps, int *len)
+static int	ft_puthex_converter(unsigned long n, int caps, int *len)
 {
+	int a;
+
 	if (n >= 16)
 	{
 		ft_puthex_converter(n / 16, caps, len);
@@ -56,19 +65,22 @@ static void	ft_puthex_converter(unsigned long n, int caps, int *len)
 	if (n < 16)
 	{
 		if (n < 10)
-			ft_putchar_fd(n + '0', 1);
+			a = ft_putchar_fd(n + '0', 1);
 		else
 		{
 			if (caps == 0)
-				ft_putchar_fd(n + 87, 1);
-			else if (caps == 1)
-				ft_putchar_fd(n + 55, 1);
+			a =	ft_putchar_fd(n + 87, 1);
+			else 
+			a =	ft_putchar_fd(n + 55, 1);
 		}
 		(*len)++;
+		if (a == -1)
+			return (a);
 	}
+	return (0);
 }
 
-static void	ft_puthex(unsigned int n, int caps, int *len)
+static int ft_puthex(unsigned int n, int caps, int *len)
 {
 	/*if (n < 0)
 	{
@@ -76,12 +88,12 @@ static void	ft_puthex(unsigned int n, int caps, int *len)
 		(*len)++;
 		n = -n;
 	}*/
-	ft_puthex_converter(n, caps, len);
+	return (ft_puthex_converter(n, caps, len));
 }
 
-static void	ft_putpointer(unsigned long n, int caps, int *len)
+static int	ft_putpointer(unsigned long n, int caps, int *len)
 {
-	ft_puthex_converter(n, caps, len);
+	return(ft_puthex_converter(n, caps, len));
 }
 
 int	ft_log10(int n)
@@ -96,25 +108,33 @@ int	ft_log10(int n)
 	}
 	return result;
 }
-void	ft_fetch_integer(va_list args, int *len)
+int	ft_fetch_integer(va_list args, int *len)
 {
 	int n;
+	int a;
 
 	n = va_arg(args, int);
 	if (n == -2147483648)
 	{
-		ft_putstr_fd("-2147483648", 1);
+		a =	ft_putstr_fd("-2147483648", 1);
+		if (a == -1)
+			return (a);
 		*len = (*len) + 11; 
-		return ;
+		return (a);
 	}
 	if (n < 0)
 	{
 		(*len)++;
 		n = -n;
-		ft_putchar_fd('-', 1);
+		a = ft_putchar_fd('-', 1);
+		if (a == -1)
+			return (a);
 	}
-	ft_putnbr_fd(n, 1);
+	a = ft_putnbr_fd(n, 1);
+	if (a == -1)
+		return (a);
 	(*len) = (*len) + 1 + ft_log10(n);
+	return (a);
 }
 
 int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
@@ -123,39 +143,55 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	unsigned long	ptr_long;
 	int				n;
 	char			*str;
-
+	int				a;
 	i++;
 	if (c[i] == '%')
 	{
-		ft_putchar_fd('%', 1);
+		a = ft_putchar_fd('%', 1);
+		if (a == -1)
+			return (a);
 		(*len)++;
 	}
 	else if (c[i] == 'c')
 	{
-		ft_putchar_fd(va_arg(args, int), 1);
+		a = ft_putchar_fd(va_arg(args, int), 1);
+		if (a == -1)
+			return (a);
 		(*len)++;
 	}
 	else if (c[i] == 'd' || c[i] == 'i')
-		ft_fetch_integer(args, len);
+	{
+		a = ft_fetch_integer(args, len);
+		if (a == -1)
+			return (a); 
+	}
 	else if (c[i] == 'p')
 	{
 		ptr = va_arg(args, void *);
 		ptr_long = (unsigned long)ptr;
-		ft_putstr_fd("0x", 1);
+		a = ft_putstr_fd("0x", 1);
+		if (a == -1)
+			return(a);
 		*len = (*len) + 2;
-		ft_putpointer(ptr_long, 0, len);
+		a = ft_putpointer(ptr_long, 0, len);
+		if (a == -1)
+			return (a);
 	}
 	else if (c[i] == 's')
 	{
 		str = va_arg(args, char *);
 		if (str == NULL)
 		{
-			ft_putstr_fd("(null)", 1);
+			a = ft_putstr_fd("(null)", 1);
+			if (a == -1)
+				return (a);
 			*len = (*len) + 6;
 		}
 		else
 		{
-			ft_putstr_fd(str, 1);
+			a = ft_putstr_fd(str, 1);
+			if (a == -1)
+				return (a);
 			*len = (*len) + ft_strlen(str);
 		}
 	}
@@ -163,17 +199,28 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	{
 		n = va_arg(args, unsigned int);
 	//	printf("n is currently %d\n", n);
-		ft_putnbr_unsigned(n, 1, len);
+		a = ft_putnbr_unsigned(n, 1, len, 0);
+		if (a == -1)
+			return (a);
 	}
 	else if (c[i] == 'x')
-		ft_puthex(va_arg(args, int), 0, len);
+	{
+		a = ft_puthex(va_arg(args, int), 0, len);
+		if (a == -1)
+			return (a);
+	}
 	else if (c[i] == 'X')
-		ft_puthex(va_arg(args, int), 1, len);
+	{
+		a = ft_puthex(va_arg(args, int), 1, len);
+		if (a == -1)
+			return (a);
+	}
 	return (i);
 }
 
 int	ft_printf(const char *c, ...)
 {
+	int		a;
 	int		i;
 	va_list	args;
 	int		len;
@@ -187,10 +234,14 @@ int	ft_printf(const char *c, ...)
 			i = ft_identify_data_type(c, i, args, &len);
 		else
 		{
-			(ft_putchar_fd(c[i], 1));
+			a = ft_putchar_fd(c[i], 1);
+			if (a == -1)
+				return (a);
 //			printf("current len is %d\n", len);
 			len++;
 		}
+		if (i == -1)
+			return (i);
 		i++;
 	}
 	va_end(args);
