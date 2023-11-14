@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:28:58 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 14:31:41 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:16:45 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 # include <stdarg.h>
 # include "libft.h"
 
-int ft_printf(const char *c, ...);
+int	ft_printf(const char *c, ...);
 
 #endif

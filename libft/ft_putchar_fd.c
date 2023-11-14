@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:21:47 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 14:11:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:25:30 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	ft_putchar_fd(char c, int fd)
 {
-	int a;
-	
+	int	a;
+
 	a = write(fd, &c, 1);
-	return a;
+	return (a);
 }
 /*
 #include <fcntl.h>
