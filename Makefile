@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 11:21:42 by rboudwin          #+#    #+#              #
-#    Updated: 2023/11/15 16:41:19 by rboudwin         ###   ########.fr        #
+#    Updated: 2023/11/18 18:11:44 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME = libftprintf.a
 
 all: $(NAME)
 
-$(NAME) : $(OBJS) libft.a 
+$(NAME) : $(OBJS) 
 	$(MAKE) -C libft/ bonus 
 	cp libft/libft.a ./libftprintf.a
 	ar -rcs $(NAME) $(OBJS)
@@ -37,4 +37,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean libft.a fclean re
+.PHONY: all clean fclean re
