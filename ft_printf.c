@@ -6,17 +6,17 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 16:13:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:44:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_fetch_string(va_list args, int *len, int a)
+int	ft_fetch_string(va_list *args, int *len, int a)
 {
 	char	*str;
 
-	str = va_arg(args, char *);
+	str = va_arg(*args, char *);
 	if (str == NULL)
 	{
 		a = ft_putstr_fd("(null)", 1);
@@ -30,7 +30,7 @@ int	ft_fetch_string(va_list args, int *len, int a)
 	return (a);
 }
 
-int	ft_percent_or_char(char const *c, int *i, va_list args, int *len)
+int	ft_percent_or_char(char const *c, int *i, va_list *args, int *len)
 {
 	int	a;
 
@@ -42,13 +42,13 @@ int	ft_percent_or_char(char const *c, int *i, va_list args, int *len)
 	}
 	else if (c[*i] == 'c')
 	{
-		a = ft_putchar_fd(va_arg(args, int), 1);
+		a = ft_putchar_fd(va_arg(*args, int), 1);
 		(*len)++;
 	}
 	return (a);
 }
 
-int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
+int	ft_identify_data_type(char const *c, int i, va_list *args, int *len)
 {
 	int	a;
 
@@ -63,11 +63,11 @@ int	ft_identify_data_type(char const *c, int i, va_list args, int *len)
 	else if (c[i] == 's')
 		a = (ft_fetch_string(args, len, 0));
 	else if (c[i] == 'u')
-		a = ft_putnbr_unsigned(va_arg(args, unsigned int), 1, len, 0);
+		a = ft_putnbr_unsigned(va_arg(*args, unsigned int), 1, len, 0);
 	else if (c[i] == 'x')
-		a = ft_puthex(va_arg(args, int), 0, len);
+		a = ft_puthex(va_arg(*args, int), 0, len);
 	else if (c[i] == 'X')
-		a = ft_puthex(va_arg(args, int), 1, len);
+		a = ft_puthex(va_arg(*args, int), 1, len);
 	if (a == -1)
 		i = a;
 	return (i);
@@ -86,7 +86,7 @@ int	ft_printf(const char *c, ...)
 	while (c[i] != '\0')
 	{
 		if (c[i] == '%')
-			i = ft_identify_data_type(c, i, args, &len);
+			i = ft_identify_data_type(c, i, &args, &len);
 		else
 		{
 			a = ft_putchar_fd(c[i], 1);

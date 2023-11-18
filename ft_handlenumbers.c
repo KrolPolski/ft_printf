@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:32:48 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/14 15:35:13 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:41:44 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int	ft_log10(int n)
 	return (result);
 }
 
-int	ft_fetch_integer(va_list args, int *len)
+int	ft_fetch_integer(va_list *args, int *len)
 {
 	int	n;
 	int	a;
 
-	n = va_arg(args, int);
+	n = va_arg(*args, int);
 	if (n == -2147483648)
 	{
 		a = ft_putstr_fd("-2147483648", 1);
