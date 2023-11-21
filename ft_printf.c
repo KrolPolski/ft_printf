@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:32:55 by rboudwin          #+#    #+#             */
-/*   Updated: 2023/11/18 16:44:49 by rboudwin         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:07:42 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ int	ft_printf(const char *c, ...)
 		else
 		{
 			a = ft_putchar_fd(c[i], 1);
-			if (a == -1)
-				return (a);
 			len++;
 		}
-		if (i == -1)
-			return (i);
-		i++;
+		if (i++ == -1 || a == -1)
+		{
+			va_end(args);
+			return (-1);
+		}
 	}
 	va_end(args);
 	return (len);
